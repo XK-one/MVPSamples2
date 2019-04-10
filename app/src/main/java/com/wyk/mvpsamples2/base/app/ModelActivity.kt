@@ -7,7 +7,7 @@ import com.wyk.mvpsamples2.ProductFlavorsTest
 
 abstract class ModelActivity: IBaseView, Activity(){
 
-    protected lateinit var mPresenter: IPresenter
+    protected lateinit var mPresenter: IPresenter<ModelActivity>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

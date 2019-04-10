@@ -12,12 +12,12 @@ import java.lang.ref.WeakReference
  * 供Activity等类去继承，在这里封装好释放内存的操作，
  * 防止P层拥有V层的引用，导致V层无法回收
  */
-abstract class BasePresenter: IPresenter {
+abstract class BasePresenter<T: IBaseView>: IPresenter<T> {
 
-    var mViewRef: WeakReference<IBaseView>? = null
+    var mViewRef: WeakReference<T>? = null
     var mDisable: Disposable? = null
 
-    override fun attachView(view: IBaseView) {
+    override fun attachView(view: T) {
         mViewRef = WeakReference(view)
     }
 
@@ -34,5 +34,5 @@ abstract class BasePresenter: IPresenter {
     /**判断是否持有页面的引用*/
     fun isAttachView() = mViewRef != null && mViewRef!!.get() != null
     /**获取页面的引用*/
-    fun getView(): IBaseView? = if(mViewRef == null) null else mViewRef!!.get()
+    fun getView(): T? = if(mViewRef == null) null else mViewRef!!.get()
 }

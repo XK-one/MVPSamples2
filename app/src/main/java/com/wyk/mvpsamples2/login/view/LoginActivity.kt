@@ -10,6 +10,8 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import com.wyk.mvpsamples2.R
+import com.wyk.mvpsamples2.base.app.IBaseView
+import com.wyk.mvpsamples2.base.app.IPresenter
 import com.wyk.mvpsamples2.base.app.ModelActivity
 import com.wyk.mvpsamples2.login.LoginContract
 import com.wyk.mvpsamples2.login.presenter.LoginPresenter
@@ -17,6 +19,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class LoginActivity: ModelActivity(),LoginContract.View{
 
+    override fun <T : IPresenter<out IBaseView>> createPresenter(): T {
+        return LoginPresenter() as T
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -31,7 +36,6 @@ class LoginActivity: ModelActivity(),LoginContract.View{
             login()
         }
     }
-
 
     override fun login() {
         password.error = null
@@ -113,6 +117,6 @@ class LoginActivity: ModelActivity(),LoginContract.View{
         }
     }
 
-    override fun createPresenter() = LoginPresenter()
+
 
 }

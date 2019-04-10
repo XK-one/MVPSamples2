@@ -7,7 +7,7 @@ import com.wyk.mvpsamples2.login.view.LoginActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class LoginPresenter: BasePresenter(), LoginContract.Presenter{
+class LoginPresenter: BasePresenter<LoginActivity>(), LoginContract.Presenter<LoginActivity>{
 
     var mModel: LoginModel
     init {
@@ -17,21 +17,19 @@ class LoginPresenter: BasePresenter(), LoginContract.Presenter{
         if(!isAttachView()){
             return
         }
+        getView()?.showLoading()
         //getCurrView().showLoading()
-        getCurrView().showLoading()
         mDisable = mModel.getResult(map)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    getCurrView().dismissLoading()
-                    getCurrView().showToast(it.toString())
+                    getView()?.dismissLoading()
+                    getView()?.showToast(it.toString())
                 },{
-                    getCurrView().dismissLoading()
-                    getCurrView().showToast(it.toString())
+                    getView()?.dismissLoading()
+                    getView()?.showToast(it.toString())
                 })
     }
-
-    fun getCurrView() = super.getView() as LoginActivity
 
     override fun start() {}
 }

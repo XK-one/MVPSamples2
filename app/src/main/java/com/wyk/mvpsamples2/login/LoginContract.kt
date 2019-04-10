@@ -15,7 +15,7 @@ interface LoginContract {
         fun showToast(msg: String)
     }
 
-    interface Presenter: IPresenter{
+    interface Presenter<T: IBaseView>: IPresenter<T>{
         fun toLogin(map: Map<String,String>)
     }
 }
